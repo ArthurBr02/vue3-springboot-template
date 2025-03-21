@@ -18,4 +18,8 @@ security.jwt.expiration-time=
 
 appFullUrl=
 
+spring.mail.host=
+spring.mail.port=
+spring.mail.username=
 spring.mail.sender-email=
+spring.mail.password=
