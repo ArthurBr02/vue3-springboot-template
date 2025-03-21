@@ -1,1 +1,2 @@
-spring.application.name=vue3-springboot-template
+spring.application.name=backend
+flyway.locations=filesystem:/db/migration

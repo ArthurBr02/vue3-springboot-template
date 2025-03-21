@@ -1,10 +1,10 @@
-package fr.arthurbr02.vue3_springboot_template;
+package fr.arthurbr02.vue3templateback.backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class Vue3SpringbootTemplateApplicationTests {
+class BackendApplicationTests {
 
 	@Test
 	void contextLoads() {
