@@ -1,4 +1,5 @@
 <script>
+import authenticationService from '@/services/authenticationService';
 import { InputText } from 'primevue';
 
 export default {
@@ -13,10 +14,20 @@ export default {
   },
   methods: {
     login() {
-      // this.$store.dispatch('auth/login', { email: this.email, password: this.password });
+      authenticationService.login(this.email, this.password)
+        .then((data) => {
+          localStorage.setItem('token', data.token);
+          this.$router.push({ name: 'home' });
+        })
+        .catch(() => {
+          this.$toast.add({ severity: 'error', summary: this.$t('toast.error'), detail: this.$t('toast.messages.login.error'), life: 3000 });
+        });
     },
     goToRegister() {
       this.$router.push({ name: 'register' });
+    },
+    goToResetPassword() {
+      this.$router.push({ name: 'resetPassword' });
     }
   }
 };
@@ -24,7 +35,7 @@ export default {
 </script>
 
 <template>
-  <Card style="width: 25rem; overflow: hidden">
+  <Card style="width: 35rem; overflow: hidden">
     <!-- <template #header>
       <img alt="user header" src="/favicon.ico?url" />
     </template> -->
@@ -35,11 +46,11 @@ export default {
     </template>
     <template #footer>
       <div>
-        <a @click="goToRegister" href="#">{{ $t('login.forgot') }}?</a>
+        <a @click="goToResetPassword" href="#">{{ $t('login.forgot') }}?</a>
       </div>
       <div class="flex gap-4 mt-1">
-        <Button :label="$t('login.register')" severity="secondary" outlined class="w-full" />
-        <Button :label="$t('login.submit')" class="w-full" />
+        <Button @click="goToRegister" :label="$t('login.register')" severity="secondary" outlined class="w-full" />
+        <Button @click="login" :label="$t('login.submit')" class="w-full" />
       </div>
     </template>
   </Card>

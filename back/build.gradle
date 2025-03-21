@@ -22,10 +22,21 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.flywaydb:flyway-core'
+	implementation 'org.flywaydb:flyway-mysql'
 	implementation 'org.springframework.session:spring-session-core'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+	runtimeOnly 'com.mysql:mysql-connector-j'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jdbc
+	implementation("org.springframework.boot:spring-boot-starter-jdbc:3.4.3")
+	implementation group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
+	implementation('io.jsonwebtoken:jjwt-api:0.11.5')
+	implementation('io.jsonwebtoken:jjwt-impl:0.11.5')
+
+	// Mails
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '3.3.0'
 }
 
 tasks.named('test') {

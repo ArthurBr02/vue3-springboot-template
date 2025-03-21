@@ -1,0 +1,1 @@
+alter table user add column reset_token varchar(255);

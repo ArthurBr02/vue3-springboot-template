@@ -12,6 +12,7 @@ import { createI18n } from 'vue-i18n'
 
 import Button from "primevue/button"
 import Card from "primevue/card";
+import ToastService from 'primevue/toastservice';
 
 import fr from "@/locale/fr.ts";
 import en from "@/locale/en.ts";
@@ -37,6 +38,7 @@ app.use(PrimeVue, {
         }
     }
 })
+app.use(ToastService);
 
 app.component('Button', Button)
 app.component('Card', Card)

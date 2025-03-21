@@ -1,4 +1,4 @@
-package fr.arthurbr02.vue3templateback.backend.core.base.flyway;
+package fr.arthurbr02.vue3templateback.backend.core.flyway;
 
 import org.flywaydb.core.Flyway;
 import org.springframework.beans.factory.annotation.Autowired;
