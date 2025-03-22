@@ -63,5 +63,9 @@ export default {
         description_2: 'Entrez deux fois votre nouveau mot de passe pour le confirmer.',
         newPassword: 'Nouveau mot de passe',
         confirmPassword: 'Confirmer le mot de passe'
-    }
+    },
+    dashboard: {
+        title: 'Tableau de bord',
+        welcome: 'Bienvenue'
+    },
 }

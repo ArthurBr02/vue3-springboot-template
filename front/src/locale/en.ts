@@ -59,5 +59,9 @@ export default {
         description_2: 'Enter your new password twice to confirm it.',
         newPassword: 'New password',
         confirmPassword: 'Confirm password'
-    }
+    },
+    dashboard: {
+        title: 'Dashboard',
+        welcome: 'Welcome',
+    },
 }
