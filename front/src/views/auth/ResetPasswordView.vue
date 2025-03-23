@@ -44,7 +44,6 @@ export default {
       this.v$.$touch();
       
       if (this.v$.$error) {
-        console.log(this.v$);
         this.$toast.add({ severity: 'error', summary: this.$t('toast.error'), detail: this.$t('toast.messages.form.invalid'), life: 3000 });
         return;
       }
@@ -102,7 +101,7 @@ export default {
       <template #title>{{ $t('resetPassword.title') }}</template>
       <template #content>
         <p class="mb-3">{{ $t('resetPassword.description') }}</p>
-        <InputText v-model="email" :invalid="v$?.email" :placeholder="$t('resetPassword.email')" class="w-full mb-3" />
+        <InputText v-model="email" :invalid="v$?.email.$error" :placeholder="$t('resetPassword.email')" class="w-full mb-3" />
       </template>
       <template #footer>
         <div class="flex gap-4 mt-1">

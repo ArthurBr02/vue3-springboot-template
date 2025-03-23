@@ -1,6 +1,7 @@
 <script>
 import authenticationService from '@/services/authenticationService';
 import { InputText } from 'primevue';
+import { RouterLink } from 'vue-router';
 
 export default {
   components: {
@@ -43,7 +44,7 @@ export default {
     </template>
     <template #footer>
       <div>
-        <a @click="goToResetPassword" href="#">{{ $t('login.forgot') }}?</a>
+        <RouterLink to="/reset-password">{{ $t('login.forgot') }}?</RouterLink>
       </div>
       <div class="flex gap-4 mt-1">
         <Button @click="goToRegister" :label="$t('login.register')" severity="secondary" outlined class="w-full" />
