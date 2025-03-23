@@ -23,6 +23,9 @@ export default {
             resetPassword: {
                 success: 'Reset email sent',
                 error: 'Error during reset email sending'
+            },
+            sidebar: {
+                logout: 'Logout successful'
             }
         }
     },
@@ -64,4 +67,8 @@ export default {
         title: 'Dashboard',
         welcome: 'Welcome',
     },
+    sidebar: {
+        logout: 'Logout',
+        account: 'Account',
+    }
 }

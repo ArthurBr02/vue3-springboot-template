@@ -28,6 +28,9 @@ export default {
                 success: 'Mot de passe réinitialisé',
                 error: 'Erreur lors de la réinitialisation du mot de passe'
             },
+            sidebar: {
+                logout: 'Déconnexion réussie'
+            }
         }
     },
     login: {
@@ -68,4 +71,8 @@ export default {
         title: 'Tableau de bord',
         welcome: 'Bienvenue'
     },
+    sidebar: {
+        logout: 'Déconnexion',
+        account: 'Compte',
+    }
 }

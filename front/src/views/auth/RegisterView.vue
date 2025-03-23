@@ -68,7 +68,7 @@ export default {
 </script>
 
 <template>
-  <Card style="width: 35rem; overflow: hidden">
+  <Card style="width: 35rem; overflow: hidden" class="mx-auto mt-10">
     <template #title>{{ $t('register.title') }}</template>
     <template #content>
       <div class="flex gap-3 flex-col">

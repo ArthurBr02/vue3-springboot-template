@@ -1,19 +1,12 @@
 body {
-    background: #e6e6e6;
+    background-color: #f9f6f6 !important;
 }
 
-/* .p-component {
-    background: white;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-} */
-
 .p-card {
-    background: white;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: white !important;
+    padding: 1rem !important;
+    border-radius: 0.5rem !important;
+    box-shadow: 0 0 15px 7px rgba(0, 0, 0, 0.1) !important;
 }
 
 input[type="password"] {

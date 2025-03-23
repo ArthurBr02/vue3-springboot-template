@@ -35,10 +35,7 @@ export default {
 </script>
 
 <template>
-  <Card style="width: 35rem; overflow: hidden">
-    <!-- <template #header>
-      <img alt="user header" src="/favicon.ico?url" />
-    </template> -->
+  <Card style="width: 35rem; overflow: hidden" class="mx-auto mt-10">
     <template #title>{{ $t('login.title') }}</template>
     <template #content>
       <InputText v-model="email" :placeholder="$t('login.email')" class="w-full mb-3" />

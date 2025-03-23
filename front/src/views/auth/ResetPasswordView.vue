@@ -83,7 +83,7 @@ export default {
 
 <template>
   <template v-if="token">
-    <Card style="width: 35rem; overflow: hidden">
+    <Card style="width: 35rem; overflow: hidden" class="mx-auto mt-10">
       <template #title>{{ $t('resetPassword.title') }}</template>
       <template #content>
         <p class="mb-3">{{ $t('resetPassword.description_2') }}</p>
