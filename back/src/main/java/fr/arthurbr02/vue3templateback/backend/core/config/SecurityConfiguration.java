@@ -34,11 +34,13 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        // Authorize requests on /rest/v1/auth/** anonymously and other requests authenticated
         http.cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/rest/v1/auth/**").permitAll()
-                        .anyRequest().anonymous())
+                        .requestMatchers("/rest/v1/auth/**").anonymous())
+                .authorizeHttpRequests(authorize -> authorize
+                        .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

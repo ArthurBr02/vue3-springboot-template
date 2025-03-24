@@ -3,6 +3,7 @@ import { Drawer, Button, Avatar } from 'primevue';
 import menus from '../../menus/menus';
 import { getUser } from '../../mixins/user';
 import SideBarItem from './SideBarItem.vue';
+import ficService from '@/services/ficService';
 
 export default {
     components: {
@@ -15,11 +16,21 @@ export default {
         return {
             visible: false,
             menus: menus,
-            currentUser: null
+            currentUser: null,
+            src: undefined
         }
     },
     mounted() {
         this.currentUser = this.getUser();
+        
+        ficService.getProfilePictureByUserId(this.currentUser.id)
+            .then((data) => {
+                if (data) this.src = URL.createObjectURL(data);
+                else this.src = "/favicon.ico";
+            })
+            .catch(() => {
+                this.src = undefined;
+            });
     },
     methods: {
         getUser,
@@ -39,6 +50,21 @@ export default {
             return this.$route.meta.noSidebar !== undefined ? !this.$route.meta.noSidebar : true;
         }
     },
+    watch: {
+        visible(newValue) {
+            if (newValue) {
+                this.currentUser = this.getUser();
+                ficService.getProfilePictureByUserId(this.currentUser.id)
+                    .then((data) => {
+                        if (data) this.src = URL.createObjectURL(data);
+                        else this.src = "/favicon.ico";
+                    })
+                    .catch(() => {
+                        this.src = undefined;
+                    });
+            }
+        }
+    }
 }
 </script>
 <template>
@@ -47,7 +73,7 @@ export default {
         <Drawer v-model:visible="visible">
             <template #header>
                 <div class="flex items-center gap-2">
-                    <Avatar image="/favicon.ico" shape="circle" />
+                    <Avatar :image="src" shape="circle" />
                     <span class="font-bold">{{  currentUser?.firstName + " " + currentUser?.lastName }}</span>
                 </div>
             </template>

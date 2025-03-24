@@ -16,3 +16,7 @@ input[type="password"] {
 .no-content-padding-card > .p-card-body {
     padding: 0 !important;
 }
+
+.p-fileupload-basic {
+    justify-content: left !important;
+}

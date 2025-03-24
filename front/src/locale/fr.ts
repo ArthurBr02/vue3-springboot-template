@@ -8,7 +8,8 @@ export default {
         messages: {
             register: {
                 success: 'Inscription réussie',
-                error: 'Erreur lors de l\'inscription'
+                error: 'Erreur lors de l\'inscription',
+                emailAlreadyUsed: 'Email déjà utilisé'
             },
             login: {
                 success: 'Connexion réussie',
@@ -34,6 +35,16 @@ export default {
             },
             sidebar: {
                 logout: 'Déconnexion réussie'
+            },
+            settingsUserUpdate: {
+                success: 'Utilisateur mis à jour',
+                emailAlreadyUsed: 'Email déjà utilisé',
+                error: 'Erreur lors de la mise à jour de l\'utilisateur'
+            },
+            settingsProfilePictureUpload: {
+                success: 'Photo de profil envoyée',
+                error: 'Erreur lors de l\'envoi de la photo de profil',
+                noFile: 'Aucun fichier sélectionné'
             }
         }
     },
@@ -53,7 +64,7 @@ export default {
         firstName: 'Prénom',
         lastName: 'Nom',
         confirmPassword: 'Confirmer le mot de passe',
-        locale: 'Langue'
+        locale: 'Langue',
     },
     password: {
         prompt: 'Mot de passe',
@@ -98,7 +109,9 @@ export default {
             locale: 'Langue',
             submit: 'Enregistrer',
             changePassword: 'Changer le mot de passe',
-            askForResetPwdMail: 'Demander un email de réinitialisation de mot de passe'
+            askForResetPwdMail: 'Demander un email de réinitialisation de mot de passe',
+            profilePicture: 'Photo de profil',
+            upload: 'Envoyer',
         }
     }
 }

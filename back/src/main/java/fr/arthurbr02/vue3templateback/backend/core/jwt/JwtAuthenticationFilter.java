@@ -1,10 +1,13 @@
 package fr.arthurbr02.vue3templateback.backend.core.jwt;
 
+import fr.arthurbr02.vue3templateback.backend.app.user.User;
+import fr.arthurbr02.vue3templateback.backend.app.user.UserService;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.lang.NonNull;
@@ -22,6 +25,8 @@ import java.io.IOException;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
+    @Autowired
+    private transient UserService userService;
     private final HandlerExceptionResolver handlerExceptionResolver;
 
     private final JwtService jwtService;
@@ -77,7 +82,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             response.getWriter().write(e.getMessage());
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             response.setCharacterEncoding("UTF-8");
-            return;
         } catch (Exception exception) {
             handlerExceptionResolver.resolveException(request, response, null, exception);
         }

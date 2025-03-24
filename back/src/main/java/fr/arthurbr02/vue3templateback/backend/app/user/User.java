@@ -40,6 +40,9 @@ public class User extends BaseEntity implements UserDetails {
     @Column(name="date_reset_token")
     private Date dateResetToken;
 
+    @Column(name = "date_password_changed")
+    private Date datePasswordChanged;
+
     public static String[] getIgnoredFields() {
         return new String[]{"password"};
     }
@@ -125,5 +128,13 @@ public class User extends BaseEntity implements UserDetails {
 
     public void setDateResetToken(Date dateResetToken) {
         this.dateResetToken = dateResetToken;
+    }
+
+    public Date getDatePasswordChanged() {
+        return datePasswordChanged;
+    }
+
+    public void setDatePasswordChanged(Date datePasswordChanged) {
+        this.datePasswordChanged = datePasswordChanged;
     }
 }

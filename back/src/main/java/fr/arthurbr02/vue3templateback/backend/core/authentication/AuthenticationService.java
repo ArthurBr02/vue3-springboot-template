@@ -6,14 +6,18 @@ import fr.arthurbr02.vue3templateback.backend.core.authentication.dto.Authentica
 import fr.arthurbr02.vue3templateback.backend.core.authentication.dto.RegisterDTO;
 import fr.arthurbr02.vue3templateback.backend.core.authentication.dto.ResetPasswordDTO;
 import fr.arthurbr02.vue3templateback.backend.core.authentication.dto.SendResetPasswordDTO;
+import fr.arthurbr02.vue3templateback.backend.core.exception.ForbiddenException;
+import fr.arthurbr02.vue3templateback.backend.core.exception.NotFoundException;
 import fr.arthurbr02.vue3templateback.backend.core.mail.MailService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Date;
 import java.util.UUID;
@@ -44,20 +48,13 @@ public class AuthenticationService {
 
     @Transactional
     public User signup(RegisterDTO input) {
-        if (userRepository.countByEmail(input.getEmail()) > 0) {
-            throw new RuntimeException("Email already in use");
-        }
-
-        if (!input.passwordMatch()) {
-            throw new RuntimeException("Passwords do not match");
-        }
-
         User user = new User();
         user.setEmail(input.getEmail());
         user.setPassword(passwordEncoder.encode(input.getPassword()));
         user.setFirstName(input.getFirstName());
         user.setLastName(input.getLastName());
         user.setLocale(input.getLocale());
+        user.setCreatedAt(new Date());
         return userRepository.save(user);
     }
 
@@ -70,7 +67,7 @@ public class AuthenticationService {
         );
 
         User user = userRepository.findByEmail(input.getEmail())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new NotFoundException("User not found"));
 
         if (user != null) {
             user.setDateLastLogin(new Date());
@@ -106,6 +103,7 @@ public class AuthenticationService {
         }
 
         user.setPassword(passwordEncoder.encode(resetPasswordDTO.getPassword()));
+        user.setDatePasswordChanged(new Date());
         user.setResetToken(null);
         userRepository.save(user);
     }

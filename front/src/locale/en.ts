@@ -10,7 +10,8 @@ export default {
         messages: {
             register: {
                 success: 'Registration successful',
-                error: 'Error during registration'
+                error: 'Error during registration',
+                emailAlreadyUsed: 'Email already used'
             },
             login: {
                 success: 'Login successful',
@@ -32,6 +33,16 @@ export default {
             },
             sidebar: {
                 logout: 'Logout successful'
+            },
+            settingsUserUpdate: {
+                success: 'User updated',
+                emailAlreadyUsed: 'Email already used',
+                error: 'Error during user update'
+            },
+            settingsProfilePictureUpload: {
+                success: 'Profile picture uploaded',
+                error: 'Error during profile picture upload',
+                noFile: 'No file selected'
             }
         }
     },
@@ -51,7 +62,7 @@ export default {
         firstName: 'First name',
         lastName: 'Last name',
         confirmPassword: 'Confirm password',
-        locale: 'Language'
+        locale: 'Language',
     },
     password: {
         prompt: 'Password',
@@ -99,7 +110,9 @@ export default {
             confirmPassword: 'Confirm password',
             submit: 'Save',
             changePassword: 'Change password',
-            askForResetPwdMail: 'Ask for a reset password email'
+            askForResetPwdMail: 'Ask for a reset password email',
+            profilePicture: 'Profile picture',
+            upload: 'Upload',
         }
     },
 }

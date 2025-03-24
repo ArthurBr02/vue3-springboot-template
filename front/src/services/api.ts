@@ -28,8 +28,8 @@ export class Api {
         }
     }
 
-    async get(url: string) {
-        return this.api.get(url)
+    async get(url: string, data = {}, options = {}) {
+        return this.api.get(url, data, options)
     }
 
     async post(url: string, data = {}, options = {}) {

@@ -3,6 +3,7 @@ import { Select, InputText, Password, Toast } from 'primevue';
 import authenticationService from '@/services/authenticationService';
 import { useVuelidate } from '@vuelidate/core';
 import { required, email, minLength } from '@vuelidate/validators';
+import { inject } from 'vue';
 
 export default {
   setup () {
@@ -52,7 +53,11 @@ export default {
             this.$toast.add({ severity: 'success', summary: this.$t('toast.success'), detail: this.$t('toast.messages.register.success'), life: 3000 });
             this.$router.push({ name: 'login' });
           })
-          .catch(() => {
+          .catch((error) => {
+            if (error.response.status === 409) {
+              this.$toast.add({ severity: 'error', summary: this.$t('toast.error'), detail: this.$t('toast.messages.register.emailAlreadyUsed'), life: 3000 });
+              return;
+            }
             this.$toast.add({ severity: 'error', summary: this.$t('toast.error'), detail: this.$t('toast.messages.register.error'), life: 3000 });
           });
       } else {

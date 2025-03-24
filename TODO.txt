@@ -1,0 +1,2 @@
+Gestion des erreurs front et back (etc...)
+Photo de profil pour l'utilisateur (lieu de stockage du fichier, affichage dans la sidebar etc...)

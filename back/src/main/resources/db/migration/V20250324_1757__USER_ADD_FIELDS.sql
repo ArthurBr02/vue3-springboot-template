@@ -1,0 +1,1 @@
+alter table user add column date_password_changed datetime;
