@@ -23,3 +23,5 @@ spring.mail.port=
 spring.mail.username=
 spring.mail.sender-email=
 spring.mail.password=
+
+validity-reset-token-minutes=15

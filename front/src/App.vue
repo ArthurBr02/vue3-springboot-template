@@ -13,7 +13,7 @@ export default {
 </script>
 
 <template>
-  <div class="w-full flex justify-center">
+  <div class="w-full flex justify-center" style="max-height: 100vh;">
     <Toast />
     <div class="mb-3 flex justify-center align-center">
       <RouterView />

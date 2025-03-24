@@ -48,6 +48,20 @@ const router = createRouter({
         noNavbar: true,
       },
     },
+    {
+      path: '/settings',
+      name: 'settings',
+      meta: {
+        requiresAuth: true,
+      },
+      children: [
+        {
+          path: '/settings/user',
+          name: 'settings-user',
+          component: () => import('../views/settings/UserSettingsView.vue'),
+        },
+      ]
+    },
   ],
 });
 

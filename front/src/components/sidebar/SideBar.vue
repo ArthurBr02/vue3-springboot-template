@@ -15,14 +15,11 @@ export default {
         return {
             visible: false,
             menus: menus,
-            buttonShowed: false,
-            currentUser: this.getUser()
+            currentUser: null
         }
     },
     mounted() {
-        setTimeout(() => {
-            this.buttonShowed = true;
-        }, 100);
+        this.currentUser = this.getUser();
     },
     methods: {
         getUser,
@@ -32,8 +29,9 @@ export default {
             this.$router.push('/login');
             this.$toast.add({ severity: 'success', summary: 'Success', detail: this.$t('toast.messages.sidebar.logout'), life: 3000 });
         },
-        showButton() {
-            this.buttonShowed = true;
+        goToUserSettings() {
+            this.visible = false;
+            this.$router.push('/settings/user');
         }
     },
     computed: {
@@ -44,13 +42,13 @@ export default {
 }
 </script>
 <template>
-    <Button class="absolute" v-show="display && !visible && buttonShowed" icon="pi pi-bars" @click="() => { visible = true; buttonShowed = false; }" />
-    <div v-if="display" class="card w-full z-[10000]">
-        <Drawer @after-hide="showButton()" v-model:visible="visible">
+    <Button class="absolute" v-show="display && !visible" icon="pi pi-bars" @click="visible = true" />
+    <div v-if="display" class="card w-full" style="z-index: 1001;">
+        <Drawer v-model:visible="visible">
             <template #header>
                 <div class="flex items-center gap-2">
                     <Avatar image="/favicon.ico" shape="circle" />
-                    <span class="font-bold">{{  currentUser.firstName + " " + currentUser.lastName }}</span>
+                    <span class="font-bold">{{  currentUser?.firstName + " " + currentUser?.lastName }}</span>
                 </div>
             </template>
             <div>
@@ -62,7 +60,7 @@ export default {
             </div>
             <template #footer>
                 <div class="flex items-center gap-2">
-                    <Button :label="$t('sidebar.account')" icon="pi pi-user" class="flex-auto" outlined></Button>
+                    <Button @click="goToUserSettings" :label="$t('sidebar.account')" icon="pi pi-user" class="flex-auto" outlined></Button>
                     <Button @click="logout" :label="$t('sidebar.logout')" icon="pi pi-sign-out" class="flex-auto" severity="danger" text></Button>
                 </div>
             </template>

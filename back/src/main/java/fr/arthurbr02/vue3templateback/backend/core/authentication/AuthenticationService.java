@@ -9,11 +9,13 @@ import fr.arthurbr02.vue3templateback.backend.core.authentication.dto.SendResetP
 import fr.arthurbr02.vue3templateback.backend.core.mail.MailService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Service
@@ -26,6 +28,9 @@ public class AuthenticationService {
 
     @Autowired
     private transient MailService mailService;
+
+    @Value("${validity-reset-token-minutes}")
+    private Integer validityResetTokenMinutes;
 
     public AuthenticationService(
             UserRepository userRepository,
@@ -64,8 +69,15 @@ public class AuthenticationService {
                 )
         );
 
-        return userRepository.findByEmail(input.getEmail())
+        User user = userRepository.findByEmail(input.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (user != null) {
+            user.setDateLastLogin(new Date());
+            userRepository.save(user);
+        }
+
+        return user;
     }
 
     @Transactional
@@ -75,16 +87,23 @@ public class AuthenticationService {
 
         UUID resetToken = UUID.randomUUID();
         user.setResetToken(resetToken.toString());
+        user.setDateResetToken(new Date());
         userRepository.save(user);
 
         // Send email with reset token
-        mailService.sendResetPasswordEmail(user.getEmail(), resetToken.toString());
+        mailService.sendResetPasswordEmail(user.getEmail(), resetToken.toString(), validityResetTokenMinutes);
     }
 
     @Transactional
     public void resetPassword(ResetPasswordDTO resetPasswordDTO) {
         User user = userRepository.findByResetToken(resetPasswordDTO.getToken())
                 .orElseThrow(() -> new RuntimeException("Invalid token"));
+
+        // Expiration après ${validityResetTokenMinutes} minutes
+        long duration = validityResetTokenMinutes * 60 * 1000L;
+        if (user.getDateResetToken().getTime() + duration  < new Date().getTime()) {
+            throw new RuntimeException("Token expired");
+        }
 
         user.setPassword(passwordEncoder.encode(resetPasswordDTO.getPassword()));
         user.setResetToken(null);

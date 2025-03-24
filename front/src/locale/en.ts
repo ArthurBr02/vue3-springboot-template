@@ -1,3 +1,5 @@
+import { email } from "@vuelidate/validators";
+
 export default {
     toast: {
         error: 'Error',
@@ -22,6 +24,10 @@ export default {
             },
             resetPassword: {
                 success: 'Reset email sent',
+                error: 'Error during reset email sending'
+            },
+            settingsResetPasswordEmail: {
+                success: 'Reset email sent. Check your inbox to reset your password',
                 error: 'Error during reset email sending'
             },
             sidebar: {
@@ -70,5 +76,30 @@ export default {
     sidebar: {
         logout: 'Logout',
         account: 'Account',
-    }
+    },
+    settings: {
+        title: 'Settings',
+        menu: {
+            general: 'General',
+            security: 'Security',
+            notifications: 'Notifications',
+            appearance: 'Appearance',
+            language: 'Language',
+            about: 'About',
+            user: 'User',
+        },
+        user: {
+            title: 'User',
+            firstName: 'First name',
+            lastName: 'Last name',
+            email: 'Email',
+            locale: 'Language',
+            password: 'Password',
+            newPassword: 'New password',
+            confirmPassword: 'Confirm password',
+            submit: 'Save',
+            changePassword: 'Change password',
+            askForResetPwdMail: 'Ask for a reset password email'
+        }
+    },
 }

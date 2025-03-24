@@ -12,3 +12,7 @@ body {
 input[type="password"] {
     width: 100%;
 }
+
+.no-content-padding-card > .p-card-body {
+    padding: 0 !important;
+}

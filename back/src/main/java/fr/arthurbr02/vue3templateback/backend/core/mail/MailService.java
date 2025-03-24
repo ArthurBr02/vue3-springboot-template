@@ -40,11 +40,12 @@ public class MailService {
 //        sendEmail(toEmail, subject, body);
 //    }
 
-    public void sendResetPasswordEmail(String toEmail, String token){
+    public void sendResetPasswordEmail(String toEmail, String token, int validityResetTokenMinutes) {
         String subject = "Réinitialisation de votre mot de passe";
         String body = "Bonjour,\n\n" +
                 "Vous avez demandé la réinitialisation de votre mot de passe.\n" +
                 "Pour cela, veuillez cliquer sur le lien suivant: " + appFullUrl + "/reset-password?token=" + token + "\n" +
+                "Ce lien est valable " + validityResetTokenMinutes + " minutes.\n\n" +
                 "Si vous n'êtes pas à l'origine de cette demande, veuillez ignorer ce message.\n\n" +
                 "Cordialement";
 

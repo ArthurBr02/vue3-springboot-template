@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Date;
 
 @Entity(name = "user")
 public class User extends BaseEntity implements UserDetails {
@@ -32,6 +33,12 @@ public class User extends BaseEntity implements UserDetails {
 
     @Column(name = "reset_token")
     private String resetToken;
+
+    @Column(name="date_last_login")
+    private Date dateLastLogin;
+
+    @Column(name="date_reset_token")
+    private Date dateResetToken;
 
     public static String[] getIgnoredFields() {
         return new String[]{"password"};
@@ -102,5 +109,21 @@ public class User extends BaseEntity implements UserDetails {
 
     public void setResetToken(String resetToken) {
         this.resetToken = resetToken;
+    }
+
+    public Date getDateLastLogin() {
+        return dateLastLogin;
+    }
+
+    public void setDateLastLogin(Date dateLastLogin) {
+        this.dateLastLogin = dateLastLogin;
+    }
+
+    public Date getDateResetToken() {
+        return dateResetToken;
+    }
+
+    public void setDateResetToken(Date dateResetToken) {
+        this.dateResetToken = dateResetToken;
     }
 }

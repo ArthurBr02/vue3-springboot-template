@@ -24,6 +24,10 @@ export default {
                 success: 'Email de réinitialisation envoyé',
                 error: 'Erreur lors de l\'envoi de l\'email de réinitialisation'
             },
+            settingsResetPasswordEmail: {
+                success: 'Email de réinitialisation envoyé. Consultez votre boîte de réception pour réinitialiser votre mot de passe',
+                error: 'Erreur lors de l\'envoi de l\'email de réinitialisation'
+            },
             resetPassword: {
                 success: 'Mot de passe réinitialisé',
                 error: 'Erreur lors de la réinitialisation du mot de passe'
@@ -74,5 +78,27 @@ export default {
     sidebar: {
         logout: 'Déconnexion',
         account: 'Compte',
+    },
+    settings: {
+        title: 'Paramètres',
+        menu: {
+            general: 'Général',
+            security: 'Sécurité',
+            notifications: 'Notifications',
+            appearance: 'Apparence',
+            language: 'Langue',
+            about: 'À propos',
+            user: 'Utilisateur',
+        },
+        user: {
+            title: 'Utilisateur',
+            firstName: 'Prénom',
+            lastName: 'Nom',
+            email: 'Email',
+            locale: 'Langue',
+            submit: 'Enregistrer',
+            changePassword: 'Changer le mot de passe',
+            askForResetPwdMail: 'Demander un email de réinitialisation de mot de passe'
+        }
     }
 }
