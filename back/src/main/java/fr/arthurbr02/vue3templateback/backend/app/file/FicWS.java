@@ -30,6 +30,25 @@ public class FicWS extends BaseWS {
     @GetMapping(value = "/profile-picture/{userId}")
     public ResponseEntity<Resource> getProfilePicture(@PathVariable Long userId) throws IOException {
         File file = ficService.findByUserIdAndTypeToFile(userId, FicType.PROFILE_PICTURE);
+
+        if (file == null || !file.exists()) {
+            return ResponseEntity.ok(null);
+        }
+
+        Resource resource = new UrlResource(file.toURI());
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_JPEG)
+                .body(resource);
+    }
+
+    @GetMapping(value = "/profile-picture-with-default/{userId}")
+    public ResponseEntity<Resource> getProfilePictureWithDefault(@PathVariable Long userId) throws IOException {
+        File file = ficService.findByUserIdAndTypeToFile(userId, FicType.PROFILE_PICTURE);
+
+        if (file == null || !file.exists()) {
+            file = ficService.getDefaultProfilePicture();
+        }
+
         Resource resource = new UrlResource(file.toURI());
         return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_JPEG)
@@ -44,6 +63,17 @@ public class FicWS extends BaseWS {
         }
 
         ficService.uploadProfilePicture(file);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/profile-picture")
+    public ResponseEntity<Object> deleteProfilePicture() {
+        User user = getCurrentUser();
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        ficService.deleteProfilePicture();
         return ResponseEntity.ok().build();
     }
 }

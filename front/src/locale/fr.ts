@@ -45,6 +45,12 @@ export default {
                 success: 'Photo de profil envoyée',
                 error: 'Erreur lors de l\'envoi de la photo de profil',
                 noFile: 'Aucun fichier sélectionné'
+            },
+            settingsProfilePictureDelete: {
+                success: 'Photo de profil supprimée',
+                error: 'Erreur lors de la suppression de la photo de profil',
+                successTitle: 'Succès',
+                errorTitle: 'Erreur',
             }
         }
     },
@@ -109,9 +115,18 @@ export default {
             locale: 'Langue',
             submit: 'Enregistrer',
             changePassword: 'Changer le mot de passe',
-            askForResetPwdMail: 'Demander un email de réinitialisation de mot de passe',
+            askForResetPwdMail: 'Réinitialiser le mot de passe',
             profilePicture: 'Photo de profil',
             upload: 'Envoyer',
+            delete: 'Supprimer',
+            deleteConfirmation: 'Êtes-vous sûr de vouloir supprimer votre photo de profil ?',
+            deleteConfirmationTitle: 'Confirmation',
+            validate: "Valider",
+            cancel: "Annuler"
         }
+    },
+    fileUpload: {
+        choose: 'Choisir',
+        upload: 'Envoyer',
     }
 }

@@ -1,5 +1,5 @@
 <script>
-import { InputText, Select, Password, Button, FileUpload } from 'primevue';
+import { InputText, Select, Password, Button, FileUpload, Dialog } from 'primevue';
 import DefaultSettingsView from './DefaultSettingsView.vue';
 import { getUser } from '../../mixins/user';
 import authenticationService from '../../services/authenticationService';
@@ -23,7 +23,7 @@ export default {
         return {
             currentUser: {},
             src: undefined,
-            file: undefined
+            file: undefined,
         }
     },
     validations: {
@@ -38,7 +38,7 @@ export default {
         this.currentUser = this.getUser();
         ficService.getProfilePictureByUserId(this.currentUser.id)
             .then((data) => {
-                this.src = URL.createObjectURL(data);
+                if(data.size > 0) this.src = URL.createObjectURL(data);
             })
             .catch(() => {
                 this.src = undefined;
@@ -75,9 +75,11 @@ export default {
                 .then((data) => {
                     localStorage.setItem('token', data.token);
                     this.currentUser = this.getUser();
+                    this.$i18n.locale = this.currentUser.locale;
                     this.$toast.add({ severity: 'success', summary: this.$t('toast.success'), detail: this.$t('toast.messages.settingsUserUpdate.success'), life: 3000 });
                 })
                 .catch((error) => {
+                    console.log(error);
                     if (error.response.status === 409) {
                         this.$toast.add({ severity: 'error', summary: this.$t('toast.error'), detail: this.$t('toast.messages.settingsUserUpdate.emailAlreadyUsed'), life: 3000 });
                         return;
@@ -96,7 +98,7 @@ export default {
                 this.$toast.add({ severity: 'error', summary: this.$t('toast.error'), detail: this.$t('toast.messages.settingsProfilePictureUpload.noFile'), life: 3000 });
                 return;
             }
-            console.log(this.file?.src);
+            
             ficService.uploadProfilePicture(this.file)
                 .then(() => {
                     this.$toast.add({ severity: 'success', summary: this.$t('toast.success'), detail: this.$t('toast.messages.settingsProfilePictureUpload.success'), life: 3000 });
@@ -104,8 +106,34 @@ export default {
                 .catch(() => {
                     this.$toast.add({ severity: 'error', summary: this.$t('toast.error'), detail: this.$t('toast.messages.settingsProfilePictureUpload.error'), life: 3000 });
                 });
+        },
+        confirmDeleteProfilePicture() {
+            this.$confirm.require({
+                message: this.$t('settings.user.deleteConfirmation'),
+                header: this.$t('settings.user.deleteConfirmationTitle'),
+                icon: 'pi pi-exclamation-triangle',
+                rejectProps: {
+                    label: this.$t('settings.user.cancel'),
+                    severity: 'secondary',
+                    outlined: true
+                },
+                acceptProps: {
+                    label: this.$t('settings.user.delete'),
+                    severity: 'danger',
+                },
+                accept: () => {
+                    ficService.deleteProfilePicture()
+                        .then(() => {
+                            this.src = undefined;
+                        });
+                    this.$toast.add({ severity: 'success', summary: this.$t('toast.messages.settingsProfilePictureDelete.successTitle'), detail: this.$t('toast.messages.settingsProfilePictureDelete.success'), life: 3000 });
+                },
+                reject: () => {
+                    this.$toast.add({ severity: 'error', summary: this.$t('toast.messages.settingsProfilePictureDelete.errorTitle'), detail: this.$t('toast.messages.settingsProfilePictureDelete.error'), life: 3000 });
+                }
+            });
         }
-    }
+    },
 }
 </script>
 
@@ -122,14 +150,17 @@ export default {
             <div class="flex flex-col gap-4 mt-4">
                 <span class="text-2xl font-medium block *:w-full col-span-2">{{ $t('settings.user.profilePicture') }}</span>
                 <div class="flex flex-row gap-4">
-                    <FileUpload mode="basic" @select="onFileSelect" customUpload auto severity="secondary" class="p-button-outlined" />
+                    <FileUpload :chooseLabel="$t('fileUpload.choose')" mode="basic" accept="image/*" :maxFileSize="1000000" @select="onFileSelect" customUpload auto severity="secondary" class="p-button-outlined" />
                     <Button @click="uploadProfilePicture" class="p-button-outlined">{{ $t('settings.user.upload') }}</button>
                 </div>
-                <img v-if="src" :src="src" alt="Image" class="shadow-md rounded-xl w-full sm:w-64" />
+                <div v-if="src">
+                    <img :src="src" :alt="$t('settings.user.profilePicture')" class="shadow-md rounded-xl w-full sm:w-64" />
+                    <Button @click="confirmDeleteProfilePicture()" severity="danger" class="mt-4 p-button-outlined">{{ $t('settings.user.delete') }}</button>
+                </div>
             </div>
             <div class="grid md:grid-cols-2 grid-cols-1 gap-4 mt-4">
                 <span class="text-2xl font-medium block *:w-full col-span-2">{{ $t('settings.user.changePassword') }}</span>
-                <Button @click="askForResetPwdMail()" :label="$t('settings.user.askForResetPwdMail')" class="w-full" />
+                <Button @click="askForResetPwdMail()" :label="$t('settings.user.askForResetPwdMail')" class="lg:w-1/2 w-full" />
             </div>
         </div>
     </DefaultSettingsView>

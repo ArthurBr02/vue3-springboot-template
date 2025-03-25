@@ -1,3 +1,2 @@
 Gestion des erreurs front et back (etc...)
-Photo de profil pour l'utilisateur - suppression + pdp par défaut
-Gestion des langues
+Revoir CSS quand la page dépasse la view height

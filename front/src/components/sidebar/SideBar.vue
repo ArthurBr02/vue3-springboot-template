@@ -22,11 +22,15 @@ export default {
     },
     mounted() {
         this.currentUser = this.getUser();
+
+        if (!this.currentUser) {
+            this.$router.push('/login');
+            return;
+        }
         
-        ficService.getProfilePictureByUserId(this.currentUser.id)
+        ficService.getProfilePictureWithDefaultByUserId(this.currentUser.id)
             .then((data) => {
-                if (data) this.src = URL.createObjectURL(data);
-                else this.src = "/favicon.ico";
+                if (data.size > 0) this.src = URL.createObjectURL(data);
             })
             .catch(() => {
                 this.src = undefined;
@@ -54,10 +58,9 @@ export default {
         visible(newValue) {
             if (newValue) {
                 this.currentUser = this.getUser();
-                ficService.getProfilePictureByUserId(this.currentUser.id)
+                ficService.getProfilePictureWithDefaultByUserId(this.currentUser.id)
                     .then((data) => {
                         if (data) this.src = URL.createObjectURL(data);
-                        else this.src = "/favicon.ico";
                     })
                     .catch(() => {
                         this.src = undefined;
@@ -73,7 +76,8 @@ export default {
         <Drawer v-model:visible="visible">
             <template #header>
                 <div class="flex items-center gap-2">
-                    <Avatar :image="src" shape="circle" />
+                    <Avatar v-if="src" :image="src" shape="circle" />
+                    <Avatar v-else shape="circle" icon="pi pi-user" />
                     <span class="font-bold">{{  currentUser?.firstName + " " + currentUser?.lastName }}</span>
                 </div>
             </template>

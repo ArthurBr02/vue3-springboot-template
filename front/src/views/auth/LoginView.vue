@@ -1,7 +1,7 @@
 <script>
 import authenticationService from '@/services/authenticationService';
+import { jwtDecode } from 'jwt-decode';
 import { InputText } from 'primevue';
-import { RouterLink } from 'vue-router';
 
 export default {
   components: {
@@ -18,6 +18,7 @@ export default {
       authenticationService.login(this.email, this.password)
         .then((data) => {
           localStorage.setItem('token', data.token);
+          this.$i18n.locale = jwtDecode(data.token).locale;
           this.$router.push({ name: 'home' });
         })
         .catch(() => {

@@ -43,6 +43,12 @@ export default {
                 success: 'Profile picture uploaded',
                 error: 'Error during profile picture upload',
                 noFile: 'No file selected'
+            },
+            settingsProfilePictureDelete: {
+                success: 'Profile picture deleted',
+                error: 'Error during profile picture deletion',
+                successTitle: 'Success',
+                errorTitle: 'Error',
             }
         }
     },
@@ -110,9 +116,18 @@ export default {
             confirmPassword: 'Confirm password',
             submit: 'Save',
             changePassword: 'Change password',
-            askForResetPwdMail: 'Ask for a reset password email',
+            askForResetPwdMail: 'Reset password',
             profilePicture: 'Profile picture',
             upload: 'Upload',
+            delete: 'Delete',
+            deleteConfirmation: 'Are you sure you want to delete your profile picture ?',
+            deleteConfirmationTitle: 'Delete profile picture',
+            validate: "Validate",
+            cancel: "Cancel"
         }
     },
+    fileUpload: {
+        choose: 'Choose',
+        upload: 'Upload',
+    }
 }

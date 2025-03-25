@@ -6,6 +6,7 @@ import fr.arthurbr02.vue3templateback.backend.core.base.BaseService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,6 +33,9 @@ public class FicService extends BaseService {
     }
 
     public void deleteById(Long id) {
+        Fic fic = findById(id);
+        File file = new File(dataDir + File.separator + fic.getType() + File.separator + fic.getUuid());
+        if (file.exists()) file.delete();
         ficRepository.deleteById(id);
     }
 
@@ -41,11 +45,12 @@ public class FicService extends BaseService {
     }
 
     public Fic findByUserIdAndType(Long userId, FicType ficType) {
-        return ficRepository.findByUserIdAndType(userId, ficType.getName()).orElseThrow();
+        return ficRepository.findByUserIdAndType(userId, ficType.getName()).orElse(null);
     }
 
     public File findByUserIdAndTypeToFile(Long userId, FicType ficType) {
         Fic fic = findByUserIdAndType(userId, ficType);
+        if (fic == null) return null;
         return new File(dataDir + File.separator + ficType.getName() + File.separator + fic.getUuid());
     }
 
@@ -71,5 +76,19 @@ public class FicService extends BaseService {
             dataDir.mkdirs();
         }
         file.transferTo(new File(dataDir + File.separator + fic.getUuid()));
+    }
+
+    public File getDefaultProfilePicture() throws IOException {
+        ClassPathResource cpr = new ClassPathResource("static/default-profile.png");
+        return cpr.getFile();
+    }
+
+    @Transactional
+    public void deleteProfilePicture() {
+        Fic fic = findByUserIdAndType(getCurrentUser().getId(), FicType.PROFILE_PICTURE);
+
+        if (fic != null) {
+            deleteById(fic.getId());
+        }
     }
 }
