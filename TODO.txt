@@ -1,2 +1,2 @@
 Gestion des erreurs front et back (etc...)
-Revoir CSS quand la page dépasse la view height
+responsive menu settings (à améliorer ?)

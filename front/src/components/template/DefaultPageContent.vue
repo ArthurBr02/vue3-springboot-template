@@ -11,7 +11,7 @@ export default {
 
 <template>
     <div class="flex flex-col">
-        <div class="pt-3 pb-5 flex justify-center w-lvw bg-white shadow">
+        <div class="pt-3 pb-5 flex justify-center min-w-full w-lvw bg-white shadow">
             <span class="text-4xl text-center font-medium">{{ $t(title) }}</span>
         </div>
         <slot></slot>

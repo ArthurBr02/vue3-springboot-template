@@ -40,7 +40,7 @@ export default {
     <DefaultPageContent :title="$t('settings.title')">
         <div class="flex flex-row m-4 h-lvh gap-4">
             <div class="flex-1/4">
-                <Card class="h-full no-content-padding-card">
+                <Card class="min-h-full h-auto no-content-padding-card">
                     <template #content>
                         <ul>
                             <li v-for="setting in settings.menu" :key="setting.label" class="mb-2">
@@ -60,7 +60,7 @@ export default {
                 </Card>
             </div>
             <div class="flex-3/4">
-                <Card class="h-full no-content-padding-card">
+                <Card class="min-h-full h-auto no-content-padding-card">
                     <template #header>
                         <span class="text-2xl font-medium block *:w-full">{{ $t('settings.menu.' + selected) }}</span>
                     </template>
