@@ -1,6 +1,6 @@
 <script>
 import { InputText, Select, Password, Button, FileUpload, Dialog } from 'primevue';
-import DefaultSettingsView from './DefaultSettingsView.vue';
+import DefaultSettings from '../../components/template/DefaultSettings.vue';
 import { getUser } from '../../mixins/user';
 import authenticationService from '../../services/authenticationService';
 import userService from '../../services/userService';
@@ -13,7 +13,7 @@ export default {
         return { v$: useVuelidate() }
     },
     components: {
-        DefaultSettingsView,
+        DefaultSettings,
         InputText,
         Password,
         Select,
@@ -138,7 +138,7 @@ export default {
 </script>
 
 <template>
-    <DefaultSettingsView selected="user">
+    <DefaultSettings selected="user">
         <div class="mt-4">
             <div class="grid md:grid-cols-2 grid-cols-1 gap-4 ">
                 <InputText v-model="currentUser.firstName" :invalid="v$.currentUser.firstName.$error" :placeholder="$t('settings.user.firstName')" />
@@ -163,5 +163,5 @@ export default {
                 <Button @click="askForResetPwdMail()" :label="$t('settings.user.askForResetPwdMail')" class="lg:w-1/2 w-full" />
             </div>
         </div>
-    </DefaultSettingsView>
+    </DefaultSettings>
 </template>

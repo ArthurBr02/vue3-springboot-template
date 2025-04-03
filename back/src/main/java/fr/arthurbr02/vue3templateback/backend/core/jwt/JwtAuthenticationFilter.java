@@ -22,6 +22,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import java.io.IOException;
+import java.util.Date;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -71,11 +72,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                             userDetails.getAuthorities()
                     );
 
+                    // Check if the password was changed after the token was issued
+                    Date issuedAt = jwtService.extractIssuedAt(jwt);
+                    User user = userService.findByEmail(userEmail);
+
+                    if (user.getDatePasswordChanged().after(issuedAt)) {
+                        throw new ExpiredJwtException(null, null, "Token expired");
+                    }
+
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authToken);
                 }
             }
-
             filterChain.doFilter(request, response);
         } catch (ExpiredJwtException e) {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());

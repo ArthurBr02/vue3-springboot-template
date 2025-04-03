@@ -10,7 +10,7 @@ export class Api {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             }
-        })
+        });
 
         if (secured) {
             this.api.interceptors.request.use(
@@ -24,8 +24,22 @@ export class Api {
                 error => {
                     return Promise.reject(error)
                 }
-            )
+            );
         }
+
+        // Intercept 401 errors and redirect to login page
+        this.api.interceptors.response.use(
+            response => {
+                return response
+            },
+            error => {
+                if (error.response.status === 401) {
+                    localStorage.removeItem('token')
+                    window.location.href = '/login'
+                }
+                return Promise.reject(error)
+            }
+        );
     }
 
     async get(url: string, data = {}, options = {}) {
